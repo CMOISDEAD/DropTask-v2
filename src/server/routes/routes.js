@@ -2,10 +2,12 @@ const express = require('express')
 const router = express.Router()
 const pool = require('../config/database')
 
+// *TASKS
+
 router.get('/getTasks', (req, res) => {
   pool.query('SELECT * FROM tasks', (err, results) => {
     if (err) console.log(err)
-    res.send(results)
+    res.status(200).send(results)
   })
 })
 
@@ -31,8 +33,40 @@ router.post('/doneTask', async (req) => {
     [req.body.done, req.body.id], (err, results) => err ? (
       console.log(`err:${err}`)
     ) : (
-      console.log(`Query update complete. ${results.affectedRows}`))
+      console.log(`Query update complete. ${results.affectedRows}`)
+    )
   )
+})
+
+// *USERS
+
+router.post('/newUser', async (req, res) => {
+  const data = {
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email,
+  }
+  await pool.query('INSERT INTO users SET ?', data, (err, results) => {
+    if (err) {
+      console.log(`err:${err}`)
+      res.status(300).send('error')
+    }
+    else {
+      console.log(`Query add complete. ${results.affectedRows}`)
+      res.status(200).send('ok')
+    }
+  })
+})
+
+router.post('/login', async (req, res) => {
+  await pool.query('SELECT * FROM users WHERE name = ?', req.body.username, (err, results) => {
+    if (!err && req.body.password === results[0].password) {
+      res.send({ status: "ok", id: results[0].id })
+    } else {
+      console.log(err)
+      res.status(300).send("bad")
+    }
+  })
 })
 
 module.exports = router

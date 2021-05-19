@@ -1,10 +1,6 @@
 const mysql = require('mysql')
-const pool = mysql.createConnection({
-  host: 'localhost',
-  database: 'tasks',
-  user: 'camilo',
-  password: 'Imnotafraid31'
-})
+const { database } = require('./keys')
+const pool = mysql.createConnection(database)
 
 pool.connect((err) => {
   err ? console.log(err) : console.log('connected')
