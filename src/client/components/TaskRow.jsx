@@ -1,8 +1,8 @@
 import React from "react";
 
 const TaskRow = (props) => (
-	<div className="col mb-4">
-		<div className="card text-white bg-dark" key={props.task.name}>
+	<div className="col mt-2 mb-2">
+		<div className="card text-dark bg-light" key={props.task.name}>
 			<div className="card-body">
 				<p className="card-title h5">{props.task.name}</p>
 				<p className="card-text">{props.task.descrip}</p>
@@ -22,7 +22,9 @@ const TaskRow = (props) => (
 				<div className="col text-end">
           <button className="btn btn-danger" onClick={()=>{
             props.removeTask(props.task)
-          }}>X</button>
+          }}>
+						<i className="fas fa-trash"></i>
+					</button>
         </div>
 			</div>
 		</div>

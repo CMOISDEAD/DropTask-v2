@@ -22,31 +22,45 @@ const TaskCreator = (props) => {
 	};
 
 	return (
-		<div className="card text-center bg-dark text-white">
+		<div className="card text-center bg-light text-dark">
 			<div className="card-body">
-				{/* <form action="/newTask" method="post">
-				</form> */}
-					<h5 className="card-title">Add Tasks</h5>
+				<h5 className="card-title">
+					<i className="fas fa-tasks"></i> {""}
+					Add Tasks
+				</h5>
+				<input
+					type="text"
+					name="name"
+					className="form-control bg-white text-dark"
+					onChange={updateNewTaskValue}
+				/>
+				<h5 className="card-title">
+					<i className="fas fa-text-height"></i> {""}
+					Description
+				</h5>
+				<textarea
+					type="text"
+					name="descrip"
+					className="form-control bg-white text-dark"
+					onChange={updateNewTaskValueText}
+				/>
+				<div>
+					<h5 className="card-title">
+						<i className="fas fa-clock"></i>
+						{""}
+						Time
+					</h5>
 					<input
 						type="text"
-						name="name"
-						className="form-control bg-secondary text-white"
-						onChange={updateNewTaskValue}
+						name="time"
+						className="h5 text-center bg-white text-dark border-0"
+						value={moment().format("MMM Do YY")}
+						disabled
 					/>
-					<h5 className="card-title">Description</h5>
-					<textarea
-						type="text"
-						name="descrip"
-						className="form-control bg-secondary text-white"
-						onChange={updateNewTaskValueText}
-					/>
-					<div>
-						<h5 className="card-title">Time</h5>
-						<input type="text" name="time" className="h5" value={moment().format("MMM Do YY")} disabled/>
-					</div>
-					<button className="btn btn-danger mt-1" onClick={createNewTask}>
-						+
-					</button>
+				</div>
+				<button className="btn btn-danger mt-1" onClick={createNewTask}>
+					<i className="fas fa-plus"></i>
+				</button>
 			</div>
 		</div>
 	);

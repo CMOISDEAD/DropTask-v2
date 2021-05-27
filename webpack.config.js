@@ -1,4 +1,5 @@
 const path = require("path");
+const DashboardPlugin = require("webpack-dashboard/plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
 
@@ -65,6 +66,7 @@ module.exports = {
             template: "./public/index.html",
             filename: "./index.html",
         }),
+        new DashboardPlugin(),
     ],
 };
 

@@ -2,7 +2,75 @@
 //   font-family: "Iosevka";
 //   src: url();
 // }
-*{
-  margin: 0;
-  padding: 0;
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.wallpapers {
+	background: url("https://www.wallpapertip.com/wmimgs/162-1623412_hd-plants-wallpaper-desktop.jpg")
+		center fixed;
+	background-size: cover;
+}
+
+.bg-img{
+  background: url("https://www.wallpapertip.com/wmimgs/162-1623412_hd-plants-wallpaper-desktop.jpg")
+		center center;
+	background-size: cover;
+}
+
+@media (max-width: 1500px) {
+	.right-mark {
+		display: none;
+	}
+}
+
+@media (max-width: 850px) {
+	.wallpapers {
+		display: none;
+	}
+  .right-mark {
+		display: block;
+    margin-top: 0 !important;
+	}
+}
+
+.loading-text{
+	margin-top: 36vh !important;
+}
+
+*::-webkit-scrollbar {
+  width: 0.5em !important;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #0000003b;
+}
+
+.bg-landing{
+	background: url("https://www.wallpapertip.com/wmimgs/3-32368_dark-nature-wallpaper-high-resolution-for-free-wallpaper.jpg") center center;
+	background-size: cover;
+	width: 100vw !important;
+}
+
+@keyframes move-up {
+	0%{
+		translate: -9vh;
+	}
+	100%{
+		translate: 9vh;
+	}
+}
+
+.move-arrow{
+	transition: all .5s;
+	animation: move-up ease-out infinite 2s;
+}
+
+.mt-9{
+	margin-top: 24vh !important;
 }

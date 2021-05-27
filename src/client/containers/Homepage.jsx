@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+import VisibilityControl from "../components/VisibilityControl";
 import TaskCreator from "../components/TaskCreator";
 import TaskRow from "../components/TaskRow";
-import VisibilityControl from "../components/VisibilityControl";
-import Login from "./Login";
-import axios from "axios";
-
+import Navbar from "../components/Navbar";
 
 const Homepage = (props) => {
-	// const [userName, setUserName] = useState("DROPDEADS");
 	const [user, setUser] = useState({
-		id: "",
-		username: "",
-		auth: false,
+		id: props.location.state.id,
+		username: props.location.state.username,
+		auth: props.location.state.auth,
 	});
 	const [taskItems, setTaskItems] = useState([
 		{
@@ -23,20 +24,11 @@ const Homepage = (props) => {
 	]);
 	const [ShowComplete, setShowComplete] = useState(false);
 
-	const isAuth = ({ id, username }) => {
-		setUser({
-			id,
-			username,
-			auth: true,
-		});
-		console.log(user);
-	};
-
 	useEffect(() => {
 		if (user.auth) {
 			const task2Render = [];
 			axios
-				.get("http://localhost:3000/getTasks")
+				.post("http://localhost:3000/getTasks", { id: user.id })
 				.then((data) => {
 					var taskRes = data.data;
 					taskRes.map((task) => {
@@ -52,10 +44,20 @@ const Homepage = (props) => {
 					setTaskItems(task2Render);
 				})
 				.catch((err) => {
+					Swal.fire(
+						"We cant connect with the database",
+						"try close and open again",
+						"error"
+					);
 					console.error(err);
 				});
 		} else {
-			return <Login callback={isAuth} />;
+			Swal.fire(
+				"We cant connect with the database",
+				"try close and open again",
+				"error"
+			);
+			throw "error";
 		}
 	}, []);
 
@@ -67,7 +69,7 @@ const Homepage = (props) => {
 				descrip,
 				time,
 				done,
-				user_id: 0,
+				user_id: user.id,
 			});
 			setTaskItems([...taskItems, { name, descrip, time, done }]);
 			swal("Sucess", "Task add sucessfully", "success");
@@ -116,23 +118,24 @@ const Homepage = (props) => {
 			));
 
 	return (
-		<>
-			<div className="bg-dark">
+		<div className="bg-img">
+			<Navbar name={user.username} />
+			<div className="d-flex flex-column min-vh-100">
 				<div className="container">
-					<h1 className="text-center text-white">Hello World</h1>
+					<h1 className="text-center text-white text-capitalize mt-2">{`Welcome ${user.username}`}</h1>
 					<div className="container mx-auto">
 						<div className="card-deck mx-auto">
 							<TaskCreator callback={createNewTask} />
 						</div>
 					</div>
-					<h3 className="text-center text-white ">Tasks</h3>
+					<h3 className="text-center text-white mt-3 mb-4">Tasks</h3>
 					<div className="container">
 						<div className="row row-cols-1 row-cols-md-2 g-4 mx-auto">
 							{taskTableRows(false)}
 						</div>
 					</div>
 				</div>
-				<div className="text-center p2">
+				<div className="mt-auto">
 					<VisibilityControl
 						description="Completed tasks"
 						isCheked={ShowComplete}
@@ -140,15 +143,20 @@ const Homepage = (props) => {
 					/>
 				</div>
 				{ShowComplete && (
-					<div className="container bg-dark">
-						<div className="row row-cols-1 row-cols-md-3 mx-auto">
+					<div className="container mt-4">
+						<div className="row row-cols-1 row-cols-md-2 g-4 mx-auto">
 							{taskTableRows(true)}
 						</div>
 					</div>
 				)}
 			</div>
-		</>
+		</div>
 	);
+};
+Homepage.defaultProps = {
+	id: "1",
+	username: "default",
+	auth: false,
 };
 
 export default Homepage;
