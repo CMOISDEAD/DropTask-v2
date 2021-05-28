@@ -121,9 +121,9 @@ const Offcanvas = (props) => {
 						</div>
 					</div>
 				</div>
-				<Modal user={props.user} modalId="Username" title="name" type="text" />
+				<Modal userKey={props.userKey} modalId="Username" title="name" type="text" />
 				<Modal
-					user={props.user}
+					userKey={props.userKey}
 					modalId="Password"
 					title="password"
 					type="password"

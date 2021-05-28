@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon .",
     "client": "webpack-dashboard -- webpack serve --open --mode development",
-    "electron" : "electron ./electron.js"
+    "electron": "electron ./electron.js"
   },
   "keywords": [],
   "author": "",
@@ -38,8 +38,11 @@
     "express": "^4.17.1",
     "express-mysql-session": "^2.1.6",
     "express-session": "^1.17.1",
+    "firebase-admin": "^9.9.0",
+    "firebase-app": "^0.0.1",
     "mini-css-extract-plugin": "^1.6.0",
     "moment": "^2.29.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "react": "^17.0.2",

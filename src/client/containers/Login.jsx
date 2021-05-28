@@ -20,7 +20,7 @@ const Login = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		axios
-			.post("http://localhost:3000/login", { username, password })
+			.post("https://dropdeads-mysql.herokuapp.com/login", { username, password })
 			.then((res) => {
 				if (res.status === 200) {
 					setId(res.data.id);
@@ -89,7 +89,7 @@ const Login = () => {
 								className="form-check-input"
 								type="checkbox"
 								value=""
-								id="flexCheckDefault"
+								id="flexCheckDefaults"
 							/>
 							<label className="form-check-label" htmlFor="flexCheckDefault">
 								Accept recive news.

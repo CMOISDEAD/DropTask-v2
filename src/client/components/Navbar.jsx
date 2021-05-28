@@ -19,11 +19,11 @@ const Navbar = (props) => {
 						aria-controls="offcanvasRight"
 					>
 						<i className="fas fa-user-cog"></i>
-						{` ${props.name}`}
+						{` ${props.username}`}
 					</button>
 				</div>
 			</nav>
-			<Offcanvas user={props.name}/>
+			<Offcanvas userKey={props.userKey}/>
 		</>
 	);
 };

@@ -10,11 +10,11 @@ const Modal = (props) => {
 	const submitData = () => {
 		if (newData) {
 			const data = {
-        item   : props.title,
-				oldName: props.user,
+        item: props.title,
+				key: props.userKey,
 				newData,
 			};
-			axios.post("http://localhost:3000/replace", data).then((res) => {
+			axios.post("https://dropdeads-mysql.herokuapp.com/replace", data).then((res) => {
 				if (res.status === 200) {
 					Swal.fire(
 						`${props.title} change sucesfully`,

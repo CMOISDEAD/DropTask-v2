@@ -28,20 +28,30 @@ const Homepage = (props) => {
 		if (user.auth) {
 			const task2Render = [];
 			axios
-				.post("http://localhost:3000/getTasks", { id: user.id })
+				.post("https://dropdeads-mysql.herokuapp.com/getTasks", { id: user.id })
 				.then((data) => {
-					var taskRes = data.data;
-					taskRes.map((task) => {
-						var done = task.done ? true : false;
-						var foo = {
-							name: task.name,
-							descrip: task.descrip,
-							done,
-							time: task.time,
-						};
-						task2Render.push(foo);
-					});
-					setTaskItems(task2Render);
+					if (data.status === 200 && data.data != null) {
+						var taskRes = data.data;
+						taskRes.map((task) => {
+							var done = task.done ? true : false;
+							var foo = {
+								key: task.key,
+								name: task.name,
+								descrip: task.descrip,
+								done,
+								time: task.time,
+							};
+							task2Render.push(foo);
+						});
+						setTaskItems(task2Render);
+					} else {
+						setTaskItems({
+							name: "No task added yet :(",
+							descrip: "add one ",
+							done: false,
+							time: "now",
+						});
+					}
 				})
 				.catch((err) => {
 					Swal.fire(
@@ -64,7 +74,7 @@ const Homepage = (props) => {
 	const createNewTask = (name, descrip, time) => {
 		if (!taskItems.find((t) => t.name === name) && !name === false) {
 			const done = false;
-			axios.post("http://localhost:3000/newTask", {
+			axios.post("https://dropdeads-mysql.herokuapp.com/newTask", {
 				name,
 				descrip,
 				time,
@@ -90,16 +100,24 @@ const Homepage = (props) => {
 		setTaskItems(
 			taskItems.map((t) => (t.name === task.name ? { ...t, done: !t.done } : t))
 		);
-		var task2Change = taskItems.find((t) => t.name === task.name);
+		var task2Change = taskItems.find((t) => t.key === task.key);
 		var request = task2Change.done ? 0 : 1;
-		axios.post("http://localhost:3000/doneTask", {
-			id: task2Change.name,
+		axios.post("https://dropdeads-mysql.herokuapp.com/doneTask", {
+			id: task2Change.key,
 			done: request,
+			user_id: user.id,
 		});
 	};
 
 	const removeTask = (task) => {
-		axios.post("http://localhost:3000/removeTask", { name: task.name });
+		axios.post("https://dropdeads-mysql.herokuapp.com/removeTask", {
+			key: task.key,
+			id: user.id,
+		});
+		const newTasks = taskItems.filter((t) => {
+			return t.key != task.key;
+		});
+		setTaskItems(newTasks);
 		swal(`Task ${task.name} was removed`, "Task remove sucessfully", "success");
 	};
 
@@ -119,7 +137,7 @@ const Homepage = (props) => {
 
 	return (
 		<div className="bg-img">
-			<Navbar name={user.username} />
+			<Navbar username={user.username} userKey={user.id} />
 			<div className="d-flex flex-column min-vh-100">
 				<div className="container">
 					<h1 className="text-center text-white text-capitalize mt-2">{`Welcome ${user.username}`}</h1>

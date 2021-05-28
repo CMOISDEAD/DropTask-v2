@@ -1,9 +1,9 @@
-const mysql = require('mysql')
-const { database } = require('./keys')
-const pool = mysql.createConnection(database)
+const admin = require('firebase-admin')
+const firebaseConfig = require('./firebase')
+const key = require('../helpers/droptasks-firebase-adminsdk-akvrw-9a5bf29e9e.json')
+// *Initialize
+admin.initializeApp({ ...firebaseConfig, credential: admin.credential.cert(key) });
 
-pool.connect((err) => {
-  err ? console.log(err) : console.log('connected')
-})
+const db = admin.database();
 
-module.exports = pool
+module.export = db
