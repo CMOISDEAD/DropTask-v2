@@ -28,7 +28,7 @@ const Homepage = (props) => {
 		if (user.auth) {
 			const task2Render = [];
 			axios
-				.post("https://dropdeads-mysql.herokuapp.com/getTasks", { id: user.id })
+				.post("https://droptasks-mysql.herokuapp.com/getTasks", { id: user.id })
 				.then((data) => {
 					if (data.status === 200 && data.data != null) {
 						var taskRes = data.data;
@@ -74,7 +74,7 @@ const Homepage = (props) => {
 	const createNewTask = (name, descrip, time) => {
 		if (!taskItems.find((t) => t.name === name) && !name === false) {
 			const done = false;
-			axios.post("https://dropdeads-mysql.herokuapp.com/newTask", {
+			axios.post("https://droptasks-mysql.herokuapp.com/newTask", {
 				name,
 				descrip,
 				time,
@@ -102,7 +102,7 @@ const Homepage = (props) => {
 		);
 		var task2Change = taskItems.find((t) => t.key === task.key);
 		var request = task2Change.done ? 0 : 1;
-		axios.post("https://dropdeads-mysql.herokuapp.com/doneTask", {
+		axios.post("https://droptasks-mysql.herokuapp.com/doneTask", {
 			id: task2Change.key,
 			done: request,
 			user_id: user.id,
@@ -110,7 +110,7 @@ const Homepage = (props) => {
 	};
 
 	const removeTask = (task) => {
-		axios.post("https://dropdeads-mysql.herokuapp.com/removeTask", {
+		axios.post("https://droptasks-mysql.herokuapp.com/removeTask", {
 			key: task.key,
 			id: user.id,
 		});

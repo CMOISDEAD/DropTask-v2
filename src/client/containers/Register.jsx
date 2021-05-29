@@ -24,7 +24,7 @@ const Register = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		axios
-			.post("https://dropdeads-mysql.herokuapp.com/newUser", { name, password, email })
+			.post("https://droptasks-mysql.herokuapp.com/newUser", { name, password, email })
 			.then((res) => {
 				if (res.status === 200) {
 					swal("Sucess", "You are a new user!!", "success");

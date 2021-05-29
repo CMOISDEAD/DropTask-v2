@@ -20,7 +20,7 @@ const Login = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		axios
-			.post("https://dropdeads-mysql.herokuapp.com/login", { username, password })
+			.post("https://droptasks-mysql.herokuapp.com/login", { username, password })
 			.then((res) => {
 				if (res.status === 200) {
 					setId(res.data.id);

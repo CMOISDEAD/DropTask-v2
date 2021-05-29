@@ -14,7 +14,7 @@ const Modal = (props) => {
 				key: props.userKey,
 				newData,
 			};
-			axios.post("https://dropdeads-mysql.herokuapp.com/replace", data).then((res) => {
+			axios.post("https://droptasks-mysql.herokuapp.com/replace", data).then((res) => {
 				if (res.status === 200) {
 					Swal.fire(
 						`${props.title} change sucesfully`,
