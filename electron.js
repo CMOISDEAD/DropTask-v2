@@ -37,16 +37,16 @@ function createWindow() {
   instance.defaults.timeout = 60000; // Axios timeout
 
   // *Starting
-  mainLoadWindow.loadURL("http://localhost:8080/loading");
+  mainLoadWindow.loadURL("https://droptasks.netlify.app/loading");
 
   loadingEvents.on("finished", () => {
     mainWindow.show(true)
-    mainWindow.loadURL("http://localhost:8080/")
+    mainWindow.loadURL("https://droptasks.netlify.app/")
     mainLoadWindow.close()
   })
 
   const appReady = () => {
-    instance.post("http://localhost:3000/ready").then(res => {
+    instance.post(" https://dropdeads-mysql.herokuapp.com/ready").then(res => {
       if (res.status === 200) {
         loadingEvents.emit("finished")
       } else {
